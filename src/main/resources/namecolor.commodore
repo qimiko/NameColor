@@ -1,0 +1,7 @@
+namecolor {
+  set {
+    color brigadier:string single_word;
+  }
+  reset;
+  get;
+}

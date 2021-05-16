@@ -1,0 +1,14 @@
+name: NameColor
+main: dev.xyze.namecolor.NameColor
+version: 2.0.1
+author: kyurime
+api-version: 1.16
+commands:
+  namecolor:
+    description: Modifies or gets user color.
+    usage: /namecolor [set <color> | reset | get]
+    permission: namecolor.editself
+permissions:
+  namecolor.editself:
+    description: Allows for the editing of one's own color.
+    default: true
