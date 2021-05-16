@@ -1,6 +1,8 @@
 package dev.xyze.namecolor
 
 import dev.xyze.namecolor.commands.NameColorCommand
+import dev.xyze.namecolor.componentplaceholder.PlaceholderHandler
+import dev.xyze.namecolor.util.ColorUtil
 import dev.xyze.namecolor.util.CommodoreUtil
 import me.lucko.commodore.CommodoreProvider
 import org.bukkit.plugin.java.JavaPlugin
@@ -18,7 +20,7 @@ class NameColor : JavaPlugin() {
         this.saveDefaultConfig()
 
         var defaultColor = this.config.getString("default-color")
-        if (defaultColor.isNullOrBlank() || !PlaceholderHelper.validateColor(defaultColor)) {
+        if (defaultColor.isNullOrBlank() || !ColorUtil.validateColor(defaultColor)) {
             defaultColor = "#FFFFFF"
         }
         playerDataStorage = PlayerData(defaultColor)

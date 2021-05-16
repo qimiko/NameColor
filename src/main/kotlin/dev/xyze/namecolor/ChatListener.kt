@@ -1,5 +1,6 @@
 package dev.xyze.namecolor
 
+import dev.xyze.namecolor.componentplaceholder.PlaceholderHandler
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -10,7 +11,7 @@ object ChatListener : Listener {
     fun onPlayerChat(event: AsyncPlayerChatEvent) {
         val msg = Bukkit.getServer().pluginManager.getPlugin("namecolor")?.config?.getString("format")
             ?: "<{nc:player}> {nc:msg}"
-        val formattedMsg = PlaceholderHelper.replacePlaceholderInString(msg, event.player, event.message)
+        val formattedMsg = PlaceholderHandler.replacePlaceholderInString(msg, event.player, event.message)
 
         event.isCancelled = true
         event.recipients.forEach {

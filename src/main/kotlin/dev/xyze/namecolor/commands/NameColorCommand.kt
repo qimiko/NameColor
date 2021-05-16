@@ -1,7 +1,7 @@
 package dev.xyze.namecolor.commands
 
 import dev.xyze.namecolor.NameColor
-import dev.xyze.namecolor.PlaceholderHelper
+import dev.xyze.namecolor.util.ColorUtil
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.HoverEvent
@@ -49,7 +49,7 @@ class NameColorCommand(private val plugin: NameColor) : CommandExecutor {
             rColor = "#${color}"
         }
 
-        if (PlaceholderHelper.validateColor(rColor)) {
+        if (ColorUtil.validateColor(rColor)) {
             plugin.playerDataStorage.setPlayerColor(sender.uniqueId, rColor)
             sender.spigot().sendMessage(getColorInfoComponent(sender, true))
         } else {
