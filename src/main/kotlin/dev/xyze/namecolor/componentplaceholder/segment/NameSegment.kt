@@ -11,6 +11,10 @@ import org.bukkit.Bukkit
 
 class NameSegment(override val rawText: String) : ComponentSegment {
     override fun toComponent(info: ComponentInfo): TextComponent {
+        if (info.player == null) {
+            return TextComponent(rawText)
+        }
+
         val playerComp = TextComponent(info.player.displayName)
         playerComp.color = ChatColor.of(
             (Bukkit.getServer().pluginManager.getPlugin("namecolor") as NameColor)

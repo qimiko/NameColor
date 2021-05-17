@@ -2,24 +2,25 @@ package dev.xyze.namecolor.componentplaceholder
 
 import dev.xyze.namecolor.componentplaceholder.segment.*
 import net.md_5.bungee.api.chat.TextComponent
-import org.bukkit.entity.Player
 import kotlin.reflect.KFunction1
 
 object PlaceholderHandler {
     private const val NAMESPACE = "nc"
+
     enum class Placeholder(val callback: KFunction1<String, ComponentSegment>) {
         PLAYER(::NameSegment),
-        MSG(::MessageSegment)
+        MSG(::MessageSegment),
+        COLOR(::ColorInfoSegment),
     }
 
-    fun getPlaceholderTag(placeholder: Placeholder) : String {
+    fun getPlaceholderTag(placeholder: Placeholder): String {
         return "{$NAMESPACE:${placeholder.name}}"
     }
 
-    fun replacePlaceholderInString(msg: String, player: Player, player_msg: String): TextComponent {
+    fun replacePlaceholderInString(msg: String, info: ComponentInfo): TextComponent {
         val finalComponent = TextComponent()
         placeholderStringToList(msg).forEach {
-            finalComponent.addExtra(it.toComponent(ComponentInfo(player, player_msg)))
+            finalComponent.addExtra(it.toComponent(info))
         }
 
         return finalComponent
@@ -34,7 +35,12 @@ object PlaceholderHandler {
         matchRegex.findAll(msg).forEach {
             matchedList.add(BasicTextSegment(it.groupValues[1]))
             try {
-                matchedList.add(Placeholder.valueOf(it.groupValues[2].uppercase()).callback.invoke(it.groupValues[2]))
+                // arguments placed in colons
+                matchedList.add(
+                    Placeholder.valueOf(
+                        it.groupValues[2].uppercase().split(":")[0]
+                    ).callback.invoke(it.groupValues[2])
+                )
             } catch (e: IllegalArgumentException) {
                 matchedList.add(UnknownSegment(it.groupValues[2]))
             }

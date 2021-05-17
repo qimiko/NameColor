@@ -1,12 +1,11 @@
 package dev.xyze.namecolor.commands
 
 import dev.xyze.namecolor.NameColor
+import dev.xyze.namecolor.componentplaceholder.ComponentInfo
+import dev.xyze.namecolor.componentplaceholder.PlaceholderHandler
 import dev.xyze.namecolor.util.ColorUtil
 import net.md_5.bungee.api.ChatColor
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
-import net.md_5.bungee.api.chat.hover.content.Text
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -72,14 +71,8 @@ class NameColorCommand(private val plugin: NameColor) : CommandExecutor {
     private fun getColorInfoComponent(player: Player, hasSetColor: Boolean = false): TextComponent {
         val color = plugin.playerDataStorage.getPlayerColor(player.uniqueId)
 
-        val infoPrefix = if (hasSetColor) "You are now using color " else "You are currently using color "
-        val infoComp = TextComponent(infoPrefix)
-        val colorDisplayComp = TextComponent(color)
-        colorDisplayComp.color = ChatColor.of(color)
-        colorDisplayComp.clickEvent = ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, color)
-        colorDisplayComp.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("Click to copy color!"))
-        infoComp.addExtra(colorDisplayComp)
-
-        return infoComp
+        val infoText =
+            if (hasSetColor) "You are now using color {nc:color:$color}" else "You are currently using color {nc:color:$color}"
+        return PlaceholderHandler.replacePlaceholderInString(infoText, ComponentInfo(player, infoText))
     }
 }
