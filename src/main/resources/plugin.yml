@@ -8,7 +8,14 @@ commands:
     description: Modifies or gets user color.
     usage: /namecolor [set <color> | reset | get]
     permission: namecolor.editself
+  ncconfig:
+    description: Edits the configuration of the plugin
+    usage: /ncconfig [set <default-color | format> <value> | get <default-color | format>]
+    permission: namecolor.editconfig
 permissions:
   namecolor.editself:
     description: Allows for the editing of one's own color.
     default: true
+  namecolor.editconfig:
+    description: Allows for the editing of the plugin config.
+    default: op

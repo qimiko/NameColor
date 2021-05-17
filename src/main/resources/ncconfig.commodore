@@ -1,0 +1,14 @@
+ncconfig {
+  set {
+    default_color {
+      value brigadier:string single_word;
+    }
+    format {
+      value brigadier:string greedy_phrase;
+    }
+  }
+  get {
+    default_color;
+    format;
+  }
+}
