@@ -1,6 +1,7 @@
 package dev.xyze.namecolor
 
-import dev.xyze.namecolor.commands.*
+import dev.xyze.namecolor.commands.NameColorCommand
+import dev.xyze.namecolor.commands.NameColorConfigCommand
 import dev.xyze.namecolor.util.ColorUtil
 import dev.xyze.namecolor.util.CommodoreUtil
 import me.lucko.commodore.CommodoreProvider
@@ -30,8 +31,8 @@ class NameColor : JavaPlugin() {
 
         if (CommodoreProvider.isSupported()) {
             val commodore = CommodoreProvider.getCommodore(this)
-            CommodoreUtil.registerCommandFromFile(commodore, this, ncCommand, "namecolor.commodore")
-            CommodoreUtil.registerCommandFromFile(commodore, this, ncConfigCommand, "ncconfig.commodore")
+            CommodoreUtil.registerCommandFromFile(commodore, this, "namecolor.commodore")
+            CommodoreUtil.registerCommandFromFile(commodore, this, "ncconfig.commodore")
         }
     }
 
