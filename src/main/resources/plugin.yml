@@ -1,6 +1,6 @@
 name: NameColor
 main: dev.xyze.namecolor.NameColor
-version: 3.0.0
+version: 3.0.1
 author: qimiko
 api-version: 1.16
 commands:
