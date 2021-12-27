@@ -1,3 +1,5 @@
 default-color: #FFFFFF
+default-prefix: ""
 format: <{nc:player}> {nc:msg}
+prefixes:
 players:

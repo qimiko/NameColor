@@ -26,7 +26,10 @@ class NameColor : JavaPlugin() {
         if (defaultColor.isNullOrBlank() || !ColorUtil.validateColor(defaultColor)) {
             defaultColor = "#FFFFFF"
         }
-        playerDataStorage = PlayerData(defaultColor)
+
+        val defaultPrefix = this.config.getString("default-prefix") ?: ""
+
+        playerDataStorage = PlayerData(defaultColor, defaultPrefix)
         playerDataStorage.getFromConfig(this.config)
 
         if (CommodoreProvider.isSupported()) {
