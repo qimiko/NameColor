@@ -15,11 +15,10 @@ class NameSegment(override val rawText: String) : ComponentSegment {
             return TextComponent(rawText)
         }
 
+        val pluginStorage = (Bukkit.getServer().pluginManager.getPlugin("namecolor") as NameColor).playerDataStorage
+
         val playerComp = TextComponent(info.player.displayName)
-        playerComp.color = ChatColor.of(
-            (Bukkit.getServer().pluginManager.getPlugin("namecolor") as NameColor)
-                .playerDataStorage.getPlayerColor(info.player.uniqueId)
-        )
+        playerComp.color = ChatColor.of(pluginStorage.getPlayerColor(info.player.uniqueId))
         playerComp.clickEvent = ClickEvent(
             ClickEvent.Action.SUGGEST_COMMAND,
             "/tell ${info.player.name}"
@@ -29,6 +28,9 @@ class NameSegment(override val rawText: String) : ComponentSegment {
             Text("${info.player.playerListName}\nType: Player\n${info.player.uniqueId}")
         )
 
-        return playerComp
+        val prefixComp = TextComponent(pluginStorage.getPlayerPrefix(info.player.uniqueId))
+        prefixComp.addExtra(playerComp)
+
+        return prefixComp
     }
 }
