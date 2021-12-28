@@ -61,6 +61,8 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
             plugin.config.set(configKey, value)
             sender.sendMessage("The value of `$key` is now `${plugin.config.getString(configKey)}`.")
         }
+
+        plugin.loadConfig()
         return true
     }
 

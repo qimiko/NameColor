@@ -20,9 +20,20 @@ class NameColor : JavaPlugin() {
         val ncConfigCommand = this.getCommand("ncconfig")!!
         ncConfigCommand.setExecutor(NameColorConfigCommand(this))
 
+        loadConfig()
+
+        if (CommodoreProvider.isSupported()) {
+            val commodore = CommodoreProvider.getCommodore(this)
+            CommodoreUtil.registerCommandFromFile(commodore, this, "namecolor.commodore")
+            CommodoreUtil.registerCommandFromFile(commodore, this, "ncconfig.commodore")
+        }
+    }
+
+    fun loadConfig() {
         this.saveDefaultConfig()
 
         var defaultColor = this.config.getString("default-color")
+
         if (defaultColor.isNullOrBlank() || !ColorUtil.validateColor(defaultColor)) {
             defaultColor = "#FFFFFF"
         }
@@ -30,13 +41,8 @@ class NameColor : JavaPlugin() {
         val defaultPrefix = this.config.getString("default-prefix") ?: ""
 
         playerDataStorage = PlayerData(defaultColor, defaultPrefix)
-        playerDataStorage.getFromConfig(this.config)
 
-        if (CommodoreProvider.isSupported()) {
-            val commodore = CommodoreProvider.getCommodore(this)
-            CommodoreUtil.registerCommandFromFile(commodore, this, "namecolor.commodore")
-            CommodoreUtil.registerCommandFromFile(commodore, this, "ncconfig.commodore")
-        }
+        playerDataStorage.getFromConfig(this.config)
     }
 
     override fun onDisable() {
