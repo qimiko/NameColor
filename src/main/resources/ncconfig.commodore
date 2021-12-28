@@ -6,9 +6,13 @@ ncconfig {
     format {
       value brigadier:string greedy_phrase;
     }
+    default_prefix {
+      value brigadier:string greedy_phrase;
+    }
   }
   get {
     default_color;
+    default_prefix;
     format;
   }
 }

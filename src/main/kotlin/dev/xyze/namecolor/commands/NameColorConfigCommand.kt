@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender
 
 class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        if (args.size == 1) {
+        if (args.size <= 1) {
             return false
         }
 
@@ -37,6 +37,7 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
         val configKey = when (key) {
             "default_color" -> "default-color"
             "format" -> "format"
+            "default_prefix" -> "default-prefix"
             else -> null
         }
 
@@ -57,7 +58,7 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
                 sender.sendMessage("${ChatColor.DARK_RED}Incorrect color format!\n${ChatColor.RED}All colors must be a 6-digit hex color.")
             }
         } else {
-            plugin.config.set(key, value)
+            plugin.config.set(configKey, value)
             sender.sendMessage("The value of `$key` is now `${plugin.config.getString(configKey)}`.")
         }
         return true
@@ -67,6 +68,7 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
         val configKey = when (key) {
             "default_color" -> "default-color"
             "format" -> "format"
+            "default_prefix" -> "default-prefix"
             else -> null
         }
 
