@@ -1,8 +1,7 @@
 package dev.xyze.namecolor
 
 import dev.xyze.namecolor.commands.*
-import dev.xyze.namecolor.util.ColorUtil
-import dev.xyze.namecolor.util.CommodoreUtil
+import dev.xyze.namecolor.util.*
 import me.lucko.commodore.CommodoreProvider
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -38,10 +37,10 @@ class NameColor : JavaPlugin() {
         var defaultColor = this.config.getString("default-color")
 
         if (defaultColor.isNullOrBlank() || !ColorUtil.validateColor(defaultColor)) {
-            defaultColor = "#FFFFFF"
+            defaultColor = DefaultValues.DEFAULT_COLOR
         }
 
-        val defaultPrefix = this.config.getString("default-prefix") ?: ""
+        val defaultPrefix = this.config.getString("default-prefix") ?: DefaultValues.DEFAULT_PREFIX
 
         playerDataStorage = PlayerData(defaultColor, defaultPrefix)
 
