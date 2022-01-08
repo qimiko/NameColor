@@ -3,6 +3,7 @@ package dev.xyze.namecolor.commands
 import dev.xyze.namecolor.NameColor
 import dev.xyze.namecolor.componentplaceholder.ComponentInfo
 import dev.xyze.namecolor.componentplaceholder.PlaceholderHandler
+import dev.xyze.namecolor.util.DefaultValues
 import dev.xyze.namecolor.util.ColorUtil
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.TextComponent
@@ -11,6 +12,12 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
 class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
+    companion object {
+        private const val KEY_DEFAULT_COLOR = "default_color"
+        private const val KEY_FORMAT = "format"
+        private const val KEY_DEFAULT_PREFIX = "default_prefix"
+    } 
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.size <= 1) {
             return false
@@ -18,9 +25,14 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
 
         when (args[0]) {
             "set" -> {
-                if (args.size < 3) {
+                if (args.size < 2) {
                     return false
                 }
+
+                if (args.size == 2) {
+                    return onResetConfig(sender, args[1])
+                }
+
                 return onSetConfig(sender, args[1], args.takeLast(args.size - 2).joinToString(" "))
             }
             "get" -> {
@@ -33,19 +45,34 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
         }
     }
 
-    private fun onSetConfig(sender: CommandSender, key: String, value: String): Boolean {
-        val configKey = when (key) {
-            "default_color" -> "default-color"
-            "format" -> "format"
-            "default_prefix" -> "default-prefix"
+    private fun normalizeConfigKey(key: String) = when (key) {
+        KEY_DEFAULT_COLOR -> "default-color"
+        KEY_FORMAT -> "format"
+        KEY_DEFAULT_PREFIX -> "default-prefix"
+        else -> null
+    }
+
+    private fun onResetConfig(sender: CommandSender, key: String) : Boolean {
+        val defaultValue = when (key) {
+            KEY_DEFAULT_COLOR -> DefaultValues.DEFAULT_COLOR
+            KEY_FORMAT -> DefaultValues.DEFAULT_FORMAT
+            KEY_DEFAULT_PREFIX -> DefaultValues.DEFAULT_PREFIX
             else -> null
         }
+        if (defaultValue == null) {
+            return false
+        }
 
+        return onSetConfig(sender, key, defaultValue)
+    }
+
+    private fun onSetConfig(sender: CommandSender, key: String, value: String): Boolean {
+        val configKey = this.normalizeConfigKey(key)
         if (configKey.isNullOrEmpty()) {
             return false
         }
 
-        if (configKey == "default-color") {
+        if (key == KEY_DEFAULT_COLOR) {
             var rColor = value
             if (!value.startsWith("#")) {
                 rColor = "#${value}"
@@ -67,18 +94,12 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
     }
 
     private fun onGetConfig(sender: CommandSender, key: String): Boolean {
-        val configKey = when (key) {
-            "default_color" -> "default-color"
-            "format" -> "format"
-            "default_prefix" -> "default-prefix"
-            else -> null
-        }
-
+        val configKey = this.normalizeConfigKey(key)
         if (configKey.isNullOrEmpty()) {
             return false
         }
 
-        if (configKey == "default-color") {
+        if (key == KEY_DEFAULT_COLOR) {
             sender.spigot().sendMessage(getColorInfoComponent())
         } else {
             sender.sendMessage("The current value of `$key` is `${plugin.config.getString(configKey)}`.")
