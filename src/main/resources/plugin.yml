@@ -8,6 +8,10 @@ commands:
     description: Modifies or gets user color.
     usage: /namecolor [set <color> | reset | get]
     permission: namecolor.editself
+  nameprefix:
+    description: Modifies or gets user prefix.
+    usage: /nameprefix [set <prefix> | reset | get]
+    permission: namecolor.editprefix
   ncconfig:
     description: Edits the configuration of the plugin
     usage: /ncconfig [set <default_color | default_prefix | format> <value> | get <default_color | default_prefix | format>]
@@ -16,6 +20,9 @@ permissions:
   namecolor.editself:
     description: Allows for the editing of one's own color.
     default: true
+  namecolor.editprefix:
+    description: Allows for the editing of one's own prefix.
+    default: op
   namecolor.editconfig:
     description: Allows for the editing of the plugin config.
     default: op

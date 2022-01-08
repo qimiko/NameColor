@@ -27,6 +27,10 @@ class PlayerData(private val defaultColor: String, private val defaultPrefix: St
         storedColors.remove(player)
     }
 
+    fun resetPlayerPrefix(player: UUID) {
+        storedPrefixes.remove(player)
+    }
+
     fun storeInConfig(config: Configuration) {
         config.createSection("players", storedColors)
         config.createSection("prefixes", storedPrefixes)

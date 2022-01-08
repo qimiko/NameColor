@@ -1,0 +1,7 @@
+nameprefix {
+  set {
+    prefix brigadier:string greedy_phrase;
+  }
+  reset;
+  get;
+}
