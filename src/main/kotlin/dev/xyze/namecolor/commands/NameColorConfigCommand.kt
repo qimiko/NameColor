@@ -111,6 +111,6 @@ class NameColorConfigCommand(private val plugin: NameColor) : CommandExecutor {
         val color = plugin.config.getString("default-color") ?: "#FFFFFF"
         val infoText =
             if (hasSetColor) "Default color is now {nc:color:$color}" else "The current default color is {nc:color:$color}"
-        return PlaceholderHandler.replacePlaceholderInString(infoText, ComponentInfo(null, infoText))
+        return PlaceholderHandler.replacePlaceholderInString(this.plugin, infoText, ComponentInfo(null, infoText))
     }
 }

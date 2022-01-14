@@ -8,13 +8,12 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
 
-object ChatListener : Listener {
+class ChatListener(private val plugin: NameColor) : Listener {
     @EventHandler
     fun onPlayerChat(event: AsyncPlayerChatEvent) {
-        val msg = Bukkit.getServer().pluginManager.getPlugin("namecolor")?.config?.getString("format")
-            ?: DefaultValues.DEFAULT_FORMAT
+        val msg = this.plugin.config.getString("format") ?: DefaultValues.DEFAULT_FORMAT
         val formattedMsg =
-            PlaceholderHandler.replacePlaceholderInString(msg, ComponentInfo(event.player, event.message))
+            PlaceholderHandler.replacePlaceholderInString(this.plugin, msg, ComponentInfo(event.player, event.message))
 
         event.isCancelled = true
         event.recipients.forEach {

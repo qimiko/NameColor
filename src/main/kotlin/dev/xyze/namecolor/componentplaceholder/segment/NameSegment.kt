@@ -10,12 +10,12 @@ import net.md_5.bungee.api.chat.hover.content.Text
 import org.bukkit.Bukkit
 
 class NameSegment(override val rawText: String) : ComponentSegment {
-    override fun toComponent(info: ComponentInfo): TextComponent {
+    override fun toComponent(plugin: NameColor, info: ComponentInfo): TextComponent {
         if (info.player == null) {
             return TextComponent(rawText)
         }
 
-        val pluginStorage = (Bukkit.getServer().pluginManager.getPlugin("namecolor") as NameColor).playerDataStorage
+        val pluginStorage = plugin.playerDataStorage
 
         val playerComp = TextComponent(info.player.displayName)
         playerComp.color = ChatColor.of(pluginStorage.getPlayerColor(info.player.uniqueId))

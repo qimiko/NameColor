@@ -1,5 +1,6 @@
 package dev.xyze.namecolor.componentplaceholder
 
+import dev.xyze.namecolor.NameColor
 import dev.xyze.namecolor.componentplaceholder.segment.*
 import net.md_5.bungee.api.chat.TextComponent
 import kotlin.reflect.KFunction1
@@ -17,10 +18,10 @@ object PlaceholderHandler {
         return "{$NAMESPACE:${placeholder.name}}"
     }
 
-    fun replacePlaceholderInString(msg: String, info: ComponentInfo): TextComponent {
+    fun replacePlaceholderInString(plugin: NameColor, msg: String, info: ComponentInfo): TextComponent {
         val finalComponent = TextComponent()
         placeholderStringToList(msg).forEach {
-            finalComponent.addExtra(it.toComponent(info))
+            finalComponent.addExtra(it.toComponent(plugin, info))
         }
 
         return finalComponent

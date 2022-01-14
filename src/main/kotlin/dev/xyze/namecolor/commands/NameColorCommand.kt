@@ -73,6 +73,6 @@ class NameColorCommand(private val plugin: NameColor) : CommandExecutor {
 
         val infoText =
             if (hasSetColor) "You are now using color {nc:color:$color}" else "You are currently using color {nc:color:$color}"
-        return PlaceholderHandler.replacePlaceholderInString(infoText, ComponentInfo(player, infoText))
+        return PlaceholderHandler.replacePlaceholderInString(this.plugin, infoText, ComponentInfo(player, infoText))
     }
 }

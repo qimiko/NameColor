@@ -11,7 +11,7 @@ class NameColor : JavaPlugin() {
         private set
 
     override fun onEnable() {
-        this.server.pluginManager.registerEvents(ChatListener, this)
+        this.server.pluginManager.registerEvents(ChatListener(this), this)
         val ncCommand = this.getCommand("namecolor")!!
         ncCommand.setExecutor(NameColorCommand(this))
 

@@ -1,5 +1,6 @@
 package dev.xyze.namecolor.componentplaceholder.segment
 
+import dev.xyze.namecolor.NameColor
 import dev.xyze.namecolor.componentplaceholder.ComponentInfo
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ClickEvent
@@ -8,7 +9,7 @@ import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.chat.hover.content.Text
 
 class ColorInfoSegment(override val rawText: String) : ComponentSegment {
-    override fun toComponent(info: ComponentInfo): TextComponent {
+    override fun toComponent(plugin: NameColor, info: ComponentInfo): TextComponent {
         var color = rawText.split(":").getOrNull(1)
         if (color.isNullOrEmpty()) {
             color = "#FFFFFF"
