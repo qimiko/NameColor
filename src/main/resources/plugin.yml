@@ -13,7 +13,7 @@ commands:
     usage: /nameprefix [set <prefix> | reset | get]
     permission: namecolor.editprefix
   ncconfig:
-    description: Edits the configuration of the plugin
+    description: Edits the configuration of the plugin.
     usage: /ncconfig [set <default_color | default_prefix | format> <value> | get <default_color | default_prefix | format>]
     permission: namecolor.editconfig
 permissions:
